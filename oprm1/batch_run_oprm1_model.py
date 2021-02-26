@@ -55,22 +55,10 @@ def remap_inhibitory_tonic_to_quiescent(gl_vals,n_inh,t_val=0.5,q_val=1.2):
 
 
 
-@click.command()
-@click.argument(basename)
-@click.option('--idx',default=0,help='used for many runs, sets the name of the cpp directory')
-@click.option('--n_neurons',default=300,help='Number of neurons in the network')
-@click.option('--k_avg',default=6,help='average number of synapses per neuron')
-@click.option('--we_max',default=4.5,help='maximum excitatory synaptic conducatace')
-@click.option('--wi_max',default=4.5,help='maximum inhibitory synaptic conducatace')
-@click.option('--frac_inh',default=0.2,help='fraction of inhibitory neuron [0,1]')
-@click.option('--frac_oprm1',default=0.5,help='fraction of excitatory neurons that are oprm1+ [0,1]')
-@click.option('--pt',default=0.35,help='fraction of neurons that are tonic [0,1]')
-@click.option('--pb',defualt=0.0,'fraction of neurons that are intrinsically bursting [0,1]')
-@click.option('--hyp_opioid',default=4.5,help='Inward current elicited by the DAMGO administration (pA)')
-@click.option('--syn_shut',default=0.55,help='Multiplicative factor that decreases (<1) or increases (>1) the synaptic strength of presynaptic OPRM1 neurons during DAMGO administration')
-@click.option('--run_seed',default=0,help='Random number generator seed')
-def main(basename,idx,n_neurons=300,k_avg=6,we_max=4,wi_max=4,frac_inh=0.2,frac_oprm1=0.5,pt=0.4,pb=0.05,hyp_opioid=10,syn_shut=1,run_seed=0):
-    save_tgl=True
+
+
+
+def main(basename,idx,n_neurons=300,k_avg=6,we_max=4,wi_max=4,frac_inh=0.2,frac_oprm1=0.5,pt=0.4,pb=0.05,hyp_opioid=10,syn_shut=1,save_tgl=True,run_seed=0):
     prefix = f'{basename}_hyp{hyp_opioid:0.1f}_synshut{syn_shut:0.2f}_run{run_seed:0.0f}_pt{pt:0.1f}_pb{pb:0.2f}_syn{we_max:0.1f}'
     seed(run_seed)
     np.random.seed(run_seed)
@@ -378,5 +366,4 @@ def batch(idx):
          we_max=4.5,wi_max=4.5)
 
 if __name__ == '__main__':
-    main()
     batch()
