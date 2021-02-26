@@ -1,0 +1,40 @@
+Cm: 21.0*pfarad
+E_ca: 0.0*volt
+E_k: -85.0*mvolt
+E_l: -58.0*mvolt
+E_na: 50.0*mvolt
+E_excit: 0.0*volt
+E_inhib: -70*mvolt
+Qs: 0.*mvolt
+sigma: 0.185
+sh: 5.0*mvolt
+sm: -5.0*mvolt
+smp: -6.0*mvolt
+sn: -4.0*mvolt
+ssyn: -3.0*mvolt
+vh: -48.0*mvolt
+vm: -34.0*mvolt
+vmp: -40.0*mvolt
+vn: -29.0*mvolt
+tau_syn: 15.0*msecond
+tau_nb: 10*ms
+tau_hb: 10*second
+gamma: 0.00368
+phi_m: 5.02e+17
+k1: 18.2 * khertz
+k2: 4.07 * khertz
+p: 0.981
+G_f0: 36.5 * hertz
+kf: 121. * hertz
+G_b0: 14.3 * hertz
+kb: 131. * hertz
+q: 1.45
+G_a1: 1.93 * khertz
+G_a2: 3.38 * khertz
+G_d1: 108. * hertz
+G_d2: 11.5 * hertz
+G_r0: 0.33 * hertz
+chr2v0: 43. * mvolt
+chr2v1: 17.1 * mvolt
+E_chr2: 0. * volt
+sensor_thresh: 100

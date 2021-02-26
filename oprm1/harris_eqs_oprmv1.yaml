@@ -1,0 +1,87 @@
+neuron_eqs: "
+    # ================ #\n
+    # === Currents === #\n
+    # ================ #\n
+    I_na = g_na * m_inf**3 * (1-n) * (v-E_na) : amp\n
+    I_k = g_k * n**4 * (v-E_k) : amp\n
+    I_nap = g_nap * m_nap_inf * h * (v-E_na) : amp\n
+    I_l = g_l * (v-E_l) : amp\n
+
+    I_syne = g_syne * (v-E_excit) : amp\n
+    I_synopioid = g_synopioid * (v-E_excit) : amp\n
+    I_syni = g_syni * (v-E_inhib) : amp\n
+
+    I_opioid = damgo_sensitivity * vm_opioid(t) : amp\n
+
+    I_tot = I_na + I_k + I_l + I_nap + I_syne + I_syni + I_synopioid + I_opioid: amp\n
+
+    # ================ #\n
+    # ==== Gating ==== #\n
+    # ================ #\n
+
+    dn/dt = (n_inf-n)/tau_n : 1\n
+    dh/dt = (h_inf-h)/tau_h : 1\n
+
+    # ================ #\n
+    # = Steady State = #\n
+    # ================ #\n
+
+    m_inf = 1./(1 + exp((v-vm)/sm)) : 1\n
+    n_inf = 1./(1 + exp((v-vn)/sn)) : 1\n
+    m_nap_inf = 1./(1 + exp((v-vmp)/smp)) : 1\n
+    h_inf = 1./(1 + exp((v-vh)/sh)) :1\n
+
+    # ================ #\n
+    # =Time constants= #\n
+    # ================ #\n
+    tau_n = tau_nb/(cosh((v-vn)/(2.*sn))) : second\n
+    tau_h = tau_hb/(cosh((v-vh)/(2.*sh))) : second\n
+
+
+    # ================ #\n
+    # =Population Monitor= #\n
+    # ================ #\n
+#    dum = int(sensor>sensor_thresh) : 1\n
+#    phi_trig = -expr_trig*(dum-expr_trig) - (expr_trig-1)*dum : 1\n
+
+    # ================ #\n
+    # = Voltage ====== #\n
+    # ================ #\n
+    dv/dt = -I_tot/Cm : volt\n
+
+    # ================ #\n
+    # = Cell Params ====== #\n
+    # ================ #\n
+
+    g_na : siemens (constant)\n
+    g_k : siemens (constant)\n
+    g_nap : siemens (constant)\n
+    g_l : siemens (constant)\n
+    g_syne : siemens\n
+    g_synopioid : siemens\n
+    g_syni : siemens\n
+    g_tonic : siemens (constant)\n
+    sensor : 1 (linked)\n
+    g0_chr2 : siemens (constant)\n
+    damgo_sensitivity : 1 (constant)\n
+
+"
+excitatory_synapse_eqs: "
+        ds/dt = ((1-s) * msyninf - s)/tau_syn : 1 (clock-driven)\n
+        msyninf = 1 / (1+exp((v_pre - Qs)/ssyn)) : 1\n
+        g_syne_post = synblock * we(t)*s : siemens (summed)\n
+"
+inhibitory_synapse_eqs: "
+        ds/dt = ((1-s) * msyninf - s)/tau_syn : 1 (clock-driven)\n
+        msyninf = 1 / (1+exp((v_pre - Qs)/ssyn)) : 1\n
+        g_syni_post = synblock * wi(t)*s : siemens (summed)\n
+"
+
+opioid_synapse_eqs: "
+        ds/dt = ((1-s) * msyninf - s)/tau_syn : 1 (clock-driven)\n
+        msyninf = 1 / (1+exp((v_pre - Qs)/ssyn)) : 1\n
+        g_synopioid_post = synblock * we_opioid(t)*s : siemens (summed)\n
+"
+sensor_eqs : "
+        dv/dt = -v / (100 * ms) : 1\n
+"
