@@ -379,4 +379,3 @@ def batch(idx):
 
 if __name__ == '__main__':
     main()
-    batch()
